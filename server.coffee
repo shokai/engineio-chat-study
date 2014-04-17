@@ -17,9 +17,15 @@ app = http.createServer(app_handler)
 engine = require('engine.io').attach(app)
 
 engine.on 'connection', (socket) ->
-  console.log "connection!!"
-  socket.send "hello new client!!"
+  console.log "new client"
+  setImmediate ->
+    socket.send JSON.stringify {type: 'chat', body: 'hello new client!!'}
+
+  socket.once 'close', ->
+    console.log "client closed"
+
   socket.on 'message', (recv_data) ->
+    console.log recv_data
     try
       data = JSON.parse recv_data
     catch
@@ -27,8 +33,9 @@ engine.on 'connection', (socket) ->
     return unless data.type?
     switch data.type
       when 'chat'
-        console.log data
-        socket.send recv_data  # echo
+        for client_id, client of engine.clients
+          setImmediate ->
+            client.send recv_data
 
 process.env.PORT ||= 5000
 app.listen(process.env.PORT)

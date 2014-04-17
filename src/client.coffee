@@ -3,11 +3,13 @@ print = (msg) ->
 
 socket = eio("#{location.protocol}//#{location.hostname}")
 
-socket.on 'open', ->
-  print "connect!!!"
-  socket.on 'close'
+socket.once 'open', ->
+  print "engine.io connect!!!"
+  socket.once 'close', ->
+    print "engine.io closed.."
 
 socket.on 'message', (recv_data) ->
+  console.log recv_data
   try
     data = JSON.parse recv_data
   catch
