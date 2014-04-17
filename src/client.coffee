@@ -1,5 +1,5 @@
-print = (msg) ->
-  $('#log').prepend $('<p>').text(msg)
+print = (str) ->
+  $('#log').prepend $('<p>').text(str)
 
 socket = eio("#{location.protocol}//#{location.hostname}")
 
@@ -17,12 +17,17 @@ socket.on 'message', (recv_data) ->
   return unless data.type?
   switch data.type
     when 'chat'
-      print data.body
+      print "<#{data.from}> #{data.body}"
 
 send_msg = ->
-  msg = $('#msg_body').val()
-  socket.send JSON.stringify {type: 'chat', body: msg}
+  data = {
+    type: 'chat'
+    body: $('#msg_body').val()
+    from: $('#msg_from').val()
+  }
+  return if data.msg?.length < 1
   $('#msg_body').val('')
+  socket.send JSON.stringify data
 
 $('#btn_send').click send_msg
 $('#msg_body').on 'keydown', (e) ->

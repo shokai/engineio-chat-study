@@ -19,7 +19,12 @@ engine = require('engine.io').attach(app)
 engine.on 'connection', (socket) ->
   console.log "new client"
   setImmediate ->
-    socket.send JSON.stringify {type: 'chat', body: 'hello new client!!'}
+    data = {
+      type: 'chat'
+      from: 'server'
+      body: 'hello new client!!'
+    }
+    socket.send JSON.stringify data
 
   socket.once 'close', ->
     console.log "client closed"
@@ -34,8 +39,7 @@ engine.on 'connection', (socket) ->
     switch data.type
       when 'chat'
         for client_id, client of engine.clients
-          setImmediate ->
-            client.send recv_data
+          client.send recv_data
 
 process.env.PORT ||= 5000
 app.listen(process.env.PORT)
