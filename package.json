@@ -1,0 +1,27 @@
+{
+  "name": "engineio-chat-study",
+  "version": "0.0.0",
+  "description": "Engine.io Chat",
+  "main": "server.coffee",
+  "scripts": {
+    "start": "./node_modules/coffee-script/bin/coffee server.coffee"
+  },
+  "keywords": [
+    "engine.io",
+    "chat"
+  ],
+  "author": "Sho Hashimoto <hashimoto@shokai.org>",
+  "license": "MIT",
+  "dependencies": {
+    "engine.io": "*",
+    "engine.io-client": "*",
+    "coffee-script": "*",
+    "coffee-errors": "*",
+    "grunt": "*",
+    "grunt-cli": "*",
+    "grunt-contrib-coffee": "*",
+    "grunt-notify": "*",
+    "grunt-coffeelint": "git+https://github.com/geta6/grunt-coffeelint",
+    "grunt-contrib-watch": "git+https://github.com/gruntjs/grunt-contrib-watch"
+  }
+}
