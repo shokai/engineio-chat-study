@@ -8,9 +8,16 @@ Engine.IO chat study
 
     % npm install
 
+
+## Build
+
+    % grunt build
+
+
 ## Run
 
-    % PORT=5000 npm start
+    % export PORT=5000
+    % npm start
 
 => http://localhost:5000
 
