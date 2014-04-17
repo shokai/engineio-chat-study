@@ -25,7 +25,7 @@ send_msg = ->
     body: $('#msg_body').val()
     from: $('#msg_from').val()
   }
-  return if data.msg?.length < 1
+  return if data.body?.length < 1
   $('#msg_body').val('')
   socket.send JSON.stringify data
 
